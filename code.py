@@ -359,29 +359,27 @@ def regressor_predict_datapoint(model, datapoint, data_scaler, target_scaler):
 # model, dataset = tmp["model"], tmp["dataset"]
 # threshold_curve(model, dataset, mode='regressor', save_path="MLP_regressor_graph")
 
-dataset_classification = load_dataset_from_file(input_path="ellipticalmodelgener-gridsearch.dat", mode='classifier')
+p = np.array([[10000., 0.3, 0.07, 0.5, 0.15]])
+
 tmp = load_from('pretrained_models\MLP_a_dataset').objects[0]
 model, dataset = tmp["model"], tmp["dataset"]
 print(
     classifier_predict_datapoint(
         model=model,
         threshold=0.5,
-        datapoint=dataset['data'][0][729:735],
+        datapoint=p,
         data_scaler=dataset['scalers'][0]
-    ),
-    dataset['data'][2][729:735]
+    )
 )
 
-dataset_regression = load_dataset_from_file(input_path="ellipticalmodelgener-gridsearch.dat", mode='regressor')
 tmp = load_from('pretrained_models\MLP_regressor_a_dataset').objects[0]
 model, dataset = tmp["model"], tmp["dataset"]
+
 print(
     regressor_predict_datapoint(
         model=model,
-        datapoint=dataset['data'][0][729:735],
+        datapoint=p,
         data_scaler=dataset['scalers'][0],
         target_scaler=dataset['scalers'][1]
-    ),
-    dataset['scalers'][1].inverse_transform(dataset['data'][2][729:735].reshape(-1,1)).reshape(-1),
-    sep='\n'
+    )
 )
